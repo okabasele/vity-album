@@ -1,45 +1,43 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+import { useState } from "react";
+import { useEffect } from "react";
+import { Album } from "./components/Album";
+export interface IAlbum {
+userId:number,
+id: number,
+title:string
 }
 
-export default App
+function App() {
+  const [albums, setAlbums] = useState<IAlbum[]>([]);
+  const url = "https://jsonplaceholder.typicode.com/albums/";
+
+
+  useEffect(() => {
+    async function fetchAlbums() {
+      var response = await fetch(url);
+      var data = await response.json();
+      setAlbums(data);
+    }
+    fetchAlbums();
+  }, []);
+
+  return <>
+    <div className="container">
+      <h1>Welcome to my albums</h1>
+      <table className="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+          </tr>
+        </thead>
+        <tbody>
+            {albums.map((album)=>
+            <Album key={album.id} album={album} />)}
+        </tbody>
+      </table>
+    </div>
+  </>
+}
+
+export default App;
