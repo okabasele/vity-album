@@ -19,8 +19,8 @@ export const Album = ({ album }: PropsAlbum) => {
   const url = `https://jsonplaceholder.typicode.com/albums/${album.id}/photos`;
   useEffect(() => {
     async function fetchSongs() {
-      var response = await fetch(url);
-      var data = await response.json();
+      const response = await fetch(url);
+      const data = await response.json();
       setSongs(data);
     }
     fetchSongs();

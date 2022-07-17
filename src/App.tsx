@@ -14,8 +14,8 @@ function App() {
 
   useEffect(() => {
     async function fetchAlbums() {
-      var response = await fetch(url);
-      var data = await response.json();
+      const response = await fetch(url);
+      const data = await response.json();
       setAlbums(data);
     }
     fetchAlbums();
